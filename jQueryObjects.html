@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sum jQuery</title>
+  <!-- <link src="js/bootstrap/css/bootstrap.min.css"/>
+  <link src="js/jquery-ui-1.13.2/jquery-ui.min.css"/>
+  <script src="js/jquery-3.6.1.min.js"></script>
+  <script src="js/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+  <script src="js/bootstrap/js/bootstrap.min.js"></script> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<body>
+
+  <h2>Elements jQuery</h2><br/>
+
+  <label>Write a text: </label><input type="text" id="textInput" style="margin-left:10px;"/><br/><br/>
+
+  <button type="button" id="createBut">
+    Create Element
+  </button>
+
+  <div id="parent"></div>
+
+  <script src="js/jquery-3.6.1.min.js"></script>
+
+  <script>
+
+    $(document).ready(function () {
+
+      $("#createBut").click(function () {
+        var text = $("#textInput").val(); 
+
+        var h2 = $("<h2>", {"text": text, "style": "color: crimson"})
+
+        h2.appendTo($("#parent"));
+
+        h2.click(function() {
+          var content = $("#textInput").val(); 
+          $(this).text(content);
+          $(this).css({"color": "yellow", "background-color": "purple"})
+        })
+      });
+    });
+  </script>
+
+</body>
+
+</html>
