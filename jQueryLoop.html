@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sum Buttons jQuery</title>
+  <title>Loop jQuery</title>
   <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"> -->
   <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
@@ -14,7 +14,13 @@
 
 <body>
 
-  <h2>Sum Buttons jQuery</h2>
+  <h2>Loop jQuery</h2>
+
+  <p>Paragraph 1</p>
+  <p>Paragraph 2</p>
+  <p>Paragraph 3</p>
+  <p>Paragraph 4</p>
+  <p>Paragraph 5</p>
 
   <div id="result"></div>
   
@@ -26,19 +32,14 @@
 
     var counter = 0;
     $(document).ready(function () {
-      for (let index = 0; index < 10; index++) {
-        var random = Math.floor(Math.random() * 100) + 1;
-        var button = $("<button>", { "type": "button", "class": "btn", "text": random });
-        button.appendTo($("#buttons"));
-        $(button).click(function () {
-          counter += parseInt(($(this)).text());
-          var h2 = $("<h2>", {"text": "Suma total: " + counter, "style": "color: crimson"});
-          $("#result").text("");
-          h2.appendTo($("#result"));
-          // $("#result").text(counter);
-          // $("#result").css("color", "red");
-        });
-      }
+      $("p").click(function() {
+        var colors = ["crimson", "purple", "orange", "yellow", "cyan"];
+        $("p").each(function() {
+          var index = Math.floor(Math.random() * colors.length);
+          var color = colors[index];
+          $(this).css("background-color", color);
+        })
+      });
     });
   </script>
 
