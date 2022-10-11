@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Departments jQuery</title>
+  <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css"> -->
+  <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+
+<h2>XML Data jQuery</h2>
+
+<label>Introduce ID: </label><input type="text" id="idText" style="margin-left:10px;" /><br /><br />
+<label>Introduce Name: </label><input type="text" id="idName" style="margin-left:10px;" /><br /><br />
+
+<button type="button" id="load" disabled>Load Departments</button><br /></br />
+
+<table id="tableDepartments">
+  <thead>
+    <tr>
+      <th>NUMBER</th>
+      <th>NAME</th>
+      <th>LOCATION</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<h1 style="color:crimson" id="messsage"></h1>
+
+<script src="js/jquery-3.6.1.min.js"></script>
+
+<script>
+
+  $(document).ready(function () {
+    $("input").on("keyup", function (e) {
+      if (e.target.value.replace(/\s/g, '').length == 0) {
+        $('#load').prop('disabled', true);
+      } else {
+        $('#load').prop('disabled', false);
+      }
+    });
+
+    $("#load").click(function () {
+      // console.log("Before service");
+      // $.get("xml/departamentos.xml", function (data) {
+      //   var loc = $("#idName").val();
+      //   $(data).find("DEPT").each(function () {
+      //     var html = "";
+      //     var filter = "LOC:contains(" + loc + ")";
+      //     if ($(data).find(filter).length == 0) {
+      //       html = "There aren't any departments with that parameter."
+      //     } else {
+      //       $(data).find(filter).each(function() {
+      //         html += $(this).text() + ";";
+      //       });
+      //     }
+      //     $("#message").text(html);
+      //   });
+      // });
+      $.get("xml/departamentos.xml", function (data) {
+        console.log("Reading");
+        var id = $("#idText").val();
+        $(data).find("DEPT").each(function () {
+          var html = "";
+          var filter = "DEPT[DEPT_NO=" + id + "]";
+          var outPrint = $(data).find(filter).first();
+          var name = $(outPrint).find("DNOMBRE").first().text();
+          var location = $(outPrint).find("LOC").first().text();
+          html += "<tr>";
+          var number = $(this).attr("DEPT_NO");
+          html += "<td>" + outPrint.attr("DEPT_NO") + "</td>";
+          html += "<td>" + name + "</td>";
+          html += "<td>" + location + "</td>";
+          $("#tableDepartments tbody").html(html);
+        });
+      })
+      console.log("After service");
+    });
+  });
+</script>
+
+</body>
+
+</html>
+
+<style>
+  table,
+  table th,
+  table td {
+    border: 1px solid black;
+  }
+</style>
