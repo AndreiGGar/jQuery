@@ -14,7 +14,7 @@
 
 <body>
 
-  <h2>Sum Buttons jQuery</h2><br />
+  <h2>Sum Buttons jQuery</h2>
 
   <div id="result"></div>
   
@@ -27,15 +27,17 @@
     var counter = 0;
     $(document).ready(function () {
       for (let index = 0; index < 10; index++) {
-        var random = Math.floor(Math.random() * 100);
+        var random = Math.floor(Math.random() * 100) + 1;
         var button = $("<button>", { "type": "button", "class": "btn", "text": random });
         console.log(button);
         button.appendTo($("#buttons"));
         $(button).click(function () {
-          counter += parseInt(($(button)).text());
-          console.log(counter);
-          $("#result").text(counter);
-          $("#result").css("color", "red");
+          counter += parseInt(($(this)).text());
+          var h2 = $("<h2>", {"text": "Suma total: " + counter, "style": "color: crimson"});
+          $("#result").text("");
+          h2.appendTo($("#result"));
+          // $("#result").text(counter);
+          // $("#result").css("color", "red");
         });
       }
     });
