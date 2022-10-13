@@ -58,7 +58,7 @@
         "method": "GET",
         "dataType": "JSON",
         success: function (data) {
-          var html = "";
+          $("#departments tbody").html("");
           $.each(data, function (index, dept) {
             var number = $("<td>", { "text": dept.numero });
             var name = $("<td>", { "text": dept.nombre });
