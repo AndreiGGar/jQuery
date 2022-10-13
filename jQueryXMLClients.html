@@ -41,12 +41,12 @@
           html = "<table>";
           html += "<thead><th>Name</th><th>Direction</th><th>Email</th><th>Postal Code</th><th>Website</th><th>Client Image</th></thead>";
           html += "<tbody><tr>"
-          html += "<td>" + name;
-          html += "<td>" + direction;
-          html += "<td>" + email;
-          html += "<td>" + postalCode;
-          html += "<td>" + webPage;
-          html += "<td>" + clientImage.attr("src", clientImage);
+          html += "<td>" + name + "</td>";
+          html += "<td>" + direction + "</td>";
+          html += "<td>" + email + "</td>";
+          html += "<td>" + postalCode + "</td>";
+          html += "<td><iframe height='250' width='250' src='" + webPage + "'></iframe></td>";
+          html += "<td><img src='" + clientImage + "'/></td>";
           html += "</tr></tbody>";
           html += "</table";
           $("#person").html(html);
@@ -56,43 +56,6 @@
         })
       });
     });
-
-    $("#load").click(function () {
-      // console.log("Before service");
-      // $.get("xml/departamentos.xml", function (data) {
-      //   var loc = $("#idName").val();
-      //   $(data).find("DEPT").each(function () {
-      //     var html = "";
-      //     var filter = "LOC:contains(" + loc + ")";
-      //     if ($(data).find(filter).length == 0) {
-      //       html = "There aren't any departments with that parameter."
-      //     } else {
-      //       $(data).find(filter).each(function() {
-      //         html += $(this).text() + ";";
-      //       });
-      //     }
-      //     $("#message").text(html);
-      //   });
-      // });
-      $.get("xml/departamentos.xml", function (data) {
-        console.log("Reading");
-        var id = $("#idText").val();
-        $(data).find("DEPT").each(function () {
-          var html = "";
-          var filter = "DEPT[DEPT_NO=" + id + "]";
-          var outPrint = $(data).find(filter).first();
-          var name = $(outPrint).find("DNOMBRE").first().text();
-          var location = $(outPrint).find("LOC").first().text();
-          html += "<tr>";
-          var number = $(this).attr("DEPT_NO");
-          html += "<td>" + outPrint.attr("DEPT_NO") + "</td>";
-          html += "<td>" + name + "</td>";
-          html += "<td>" + location + "</td>";
-          $("#tableDepartments tbody").html(html);
-        });
-      })
-      console.log("After service");
-    });
   });
 </script>
 
@@ -101,9 +64,16 @@
 </html>
 
 <style>
+  table {
+    margin: 10px;
+  }
   table,
   table th,
   table td {
     border: 1px solid black;
+  }
+  img {
+    width: 50%;
+    height: 50%;
   }
 </style>
