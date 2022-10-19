@@ -17,7 +17,7 @@
   <h2>JSON Data jQuery</h2>
 
   <select id="sel">
-    <!-- <option value=""></option> -->
+    <option value="None"></option>
   </select>
 
   <table id="jsonList" style="display: none;">
@@ -41,7 +41,8 @@
         $.each(data.jugadores, function (index, player) {
           var name = player.nombre;
           var option = $("<option>", {
-            "text": name
+            "text": name,
+            "value": name
           });
           $("#sel").append(option);
         });
@@ -54,20 +55,20 @@
           "dataType": "JSON",
           "success": function (data) {
             var html = "";
-            var player = data.jugadores[index ];
-            // var player = data.jugadores[index-1];
-            var name = player.nombre;
-            var number = player.numero;
-            var position = player.posicion;
-            var age = player.edad;
-            var image = player.imagen;
-            html += "<tr><td>" + (index) + "</td><td>" + name + "</td><td>" + number + "</td><td>" + position + "</td><td>" + age + "</td><td><img src='" + image + "'/></td></tr>";
-            $("#jsonList tbody").html(html);
-            // if ($("#sel option").val() != "" || $("#sel option").val() != null) {
-            $("#jsonList").css("display", "block");
-            // } else {
-            //   $("#jsonList").css("display", "none");
-            // }
+            // var player = data.jugadores[index ];
+            if (index > 0) {
+              var player = data.jugadores[index - 1];
+              var name = player.nombre;
+              var number = player.numero;
+              var position = player.posicion;
+              var age = player.edad;
+              var image = player.imagen;
+              html += "<tr><td>" + (index) + "</td><td>" + name + "</td><td>" + number + "</td><td>" + position + "</td><td>" + age + "</td><td><img src='" + image + "'/></td></tr>";
+              $("#jsonList tbody").html(html);
+              $("#jsonList").css("display", "block");
+            } else {
+              $("#jsonList").css("display", "none");
+            }
           },
           "error": function (error) {
             console.log("Error: " + error)
