@@ -18,41 +18,63 @@
 
 <div id="header"></div>
 
-<h2>Crud jQuery</h2></br>
-
-<div id="menu"></div>
+<div>
+  <h3 class="mt-4 mb-4">Teams</h3>
+  <div class="row d-flex justify-content-center">
+    <div class="card text-center w-50">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <img
+          style="width: 150px; height: 150px;"
+        />
+        <h5 class="card-title">
+          Shempions: 
+        </h5>
+        <p class="card-text"></p>
+        <a href={"/teams/players/" + this.state.team.idEquipo}>
+          <button class="btn btn-success">Players</button>
+        </a>
+        <a href=index.html>
+          <button class="btn btn-primary">Go Back</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
 
 </body>
 
 </html>
 
 <script>
+  var urlSearchParams = new URLSearchParams(window.location.search);
+  var params = Object.fromEntries(urlSearchParams.entries());
+
   $.get('header.html',function(response){ 
      $('#header').html(response); 
   });
 
-  function loadTeams() {
-      var request = "api/equipos";
+  function loadTeam() {
+      var request = "api/equipos/" + params.idequipo;
       $.ajax({
         "url": global.urlApi + request,
         "method": "GET",
         "dataType": "JSON",
-        success: function (data) {
-          $.each(data, function (index, team) {
-            var li = $("<li>");
-            var a = $("<a>", { "class": "dropdown-item", "data-toggle": "modal", "href": "team.html?idequipo=" + team.idEquipo, "value": team.idEquipo, "text": team.nombre });
-            console.log(a.text())
-            li.append(a);
-            var list = $(".dropdown-menu")
-            list.append(li);
-          });
+        success: function (team) {
+          ($(".card-header").text(team.nombre));
+          ($(".card-title").text("Shempions: " + team.champions));
+          ($(".card-text").text(team.descripcion));
+          ($("img").attr("src", team.imagen));
         }
       })
     }
   // <a href="equipo.html?idequipo=1&idxd=2"></a>
   // $("#header").load("header.html");
+  
   $(document).ready(function(data) {
-    loadTeams();
+    // console.log(params);
+    // console.log(params.idequipo)
+    loadTeam();
   });
  </script>
 
