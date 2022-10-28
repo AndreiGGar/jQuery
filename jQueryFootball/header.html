@@ -8,11 +8,11 @@
   <title>Crud jQuery</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
   <link rel="stylesheet" href="js/jquery-ui-1.13.2/jquery-ui.min.css">
-  <link rel="stylesheet" href="js/bootstrap-4.6.2-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="js/bootstrap-5.2.2-dist/css/bootstrap.min.css">
   <script src="js/jquery-3.6.1.min.js"></script>
   <script src="js/jquery-ui-1.13.2/jquery-ui.min.js"></script>
-  <script src="js/bootstrap-4.6.2-dist/js/bootstrap.min.js"></script>
-  <script src="js/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="js/bootstrap-5.2.2-dist/js/bootstrap.min.js"></script>
+  <script src="js/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js"></script>
 </head>
 
 <div>
@@ -21,14 +21,14 @@
     style="background-color: lightgray"
   >
     <div class="container-fluid">
-      <NavLink class="navbar-brand" to="/">
+      <a class="navbar-brand" href="/">
         <img
-          src={Uefa}
+          src=./assets/images/uefa.png
           alt="Uefa"
           style="width: 50px; height: 50px"
         />
         Champions League
-      </NavLink>
+      </a>
       <button
         class="navbar-toggler"
         type="button"
@@ -46,18 +46,18 @@
       >
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <NavLink
+            <a
               class="nav-link active text-warning"
               aria-current="page"
-              to="/"
+              href="index.html"
             >
               Home
-            </NavLink>
+            </a>
           </li>
           <li class="nav-item">
-            <NavLink class="nav-link text-danger" to="/bets">
+            <a class="nav-link text-danger" href="bets.html">
               Bets
-            </NavLink>
+            </a>
           </li>
           <li class="nav-item dropdown">
             <a
@@ -69,20 +69,21 @@
             >
               Teams
             </a>
-
-            <ul class="dropdown-menu">
-              {this.state.teams.map((team, index) => {
+            <ul class="dropdown-menu" aria-labelledby="dropdown-toggle">
+              <li><a class="dropdown-item">Pato</a></li>
+              <li><a class="dropdown-item">Pato 2</a></li>
+              <!-- {this.state.teams.map((team, index) => {
                 return (
                   <li key={team.idEquipo}>
-                    <NavLink
-                      to={"/teams/" + team.idEquipo}
+                    <a
+                      href={"/teams/" + team.idEquipo}
                       class="dropdown-item"
                     >
                       {team.nombre}
-                    </NavLink>
+                    </a>
                   </li>
                 );
-              })}
+              })} -->
             </ul>
           </li>
         </ul>

@@ -8,15 +8,17 @@
   <title>Crud jQuery</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
   <link rel="stylesheet" href="js/jquery-ui-1.13.2/jquery-ui.min.css">
-  <link rel="stylesheet" href="js/bootstrap-4.6.2-dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="js/bootstrap-5.2.2-dist/css/bootstrap.min.css">
   <script src="js/jquery-3.6.1.min.js"></script>
   <script src="js/jquery-ui-1.13.2/jquery-ui.min.js"></script>
-  <script src="js/bootstrap-4.6.2-dist/js/bootstrap.min.js"></script>
+  <script src="js/bootstrap-5.2.2-dist/js/bootstrap.min.js"></script>
+  <script src="js/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="global.js"></script>
 </head>
 
-<h2>Crud jQuery</h2></br>
-
 <div id="header"></div>
+
+<h2>Crud jQuery</h2></br>
 
 <div id="menu"></div>
 
@@ -28,13 +30,32 @@
   $.get('header.html',function(response){ 
      $('#header').html(response); 
   });
+
+  // function loadTeams() {
+  //   console.log(global.urlApi)
+  //     var value = $(this).val();
+  //     var request = "/api/empleados/empleadosdepartamento/" + parseInt(value);
+  //     $.ajax({
+  //       "url": global.urlApi + request,
+  //       "method": "GET",
+  //       "dataType": "JSON",
+  //       success: function (data) {
+  //         var html = "";
+  //         $.each(data, function (index, employ) {
+  //           html += "<tr><td>" + employ.apellido + "</td>";
+  //           html += "<td>" + employ.oficio + "</td>";
+  //           html += "<td>" + employ.salario + "</td>";
+  //           html += "<td>" + employ.departamento + "</td></tr>";
+  //         });
+  //         $("#employers tbody").html(html);
+  //       }
+  //     })
+  //   }
   // <a href="equipo.html?idequipo=1&idxd=2"></a>
   // $("#header").load("header.html");
   $(document).ready(function(data) {
-    
-  $(".dropdown-toggle").dropdown();
-  
-  $("#menu").html(data)
+    console.log(Global.urlApi)
+    // loadTeams();
   });
  </script>
 
