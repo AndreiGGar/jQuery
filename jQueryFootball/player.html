@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Crud jQuery</title>
+  <title>Teams</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
   <link rel="stylesheet" href="js/jquery-ui-1.13.2/jquery-ui.min.css">
   <link rel="stylesheet" href="js/bootstrap-5.2.2-dist/css/bootstrap.min.css">
@@ -19,23 +19,16 @@
 <div id="header"></div>
 
 <div>
-  <h3 class="mt-4 mb-4">Teams</h3>
+  <h3 class="mt-4 mb-4">Player</h3>
   <div class="row d-flex justify-content-center">
     <div class="card text-center w-50">
       <div class="card-header"></div>
       <div class="card-body">
-        <img
-          style="width: 150px; height: 150px;"
-        />
-        <h5 class="card-title">
-          Shempions: 
-        </h5>
+        <img style="width: 150px; height: 200px;"/>
+        <h5 class="card-title"></h5>
         <p class="card-text"></p>
-        <a href={"/teams/players/" + this.state.team.idEquipo}>
+        <a id="playersBtn">
           <button class="btn btn-success">Players</button>
-        </a>
-        <a href=index.html>
-          <button class="btn btn-primary">Go Back</button>
         </a>
       </div>
     </div>
@@ -47,50 +40,34 @@
 </html>
 
 <script>
+  $.get('header.html', function (response) {
+    $('#header').html(response);
+  });
+
   var urlSearchParams = new URLSearchParams(window.location.search);
   var params = Object.fromEntries(urlSearchParams.entries());
 
-  $.get('header.html',function(response){ 
-     $('#header').html(response); 
-  });
-
   function loadTeam() {
-      var request = "api/equipos/" + params.idequipo;
-      $.ajax({
-        "url": global.urlApi + request,
-        "method": "GET",
-        "dataType": "JSON",
-        success: function (team) {
-          ($(".card-header").text(team.nombre));
-          ($(".card-title").text("Shempions: " + team.champions));
-          ($(".card-text").text(team.descripcion));
-          ($("img").attr("src", team.imagen));
-        }
-      })
-    }
-  // <a href="equipo.html?idequipo=1&idxd=2"></a>
-  // $("#header").load("header.html");
-  
-  $(document).ready(function(data) {
-    // console.log(params);
-    // console.log(params.idequipo)
+    var request = "api/Jugadores/" + params.idplayer;
+    $.ajax({
+      "url": global.urlApi + request,
+      "method": "GET",
+      "dataType": "JSON",
+      success: function (player) {
+        ($(".card-header").text(player.nombre));
+        ($(".card-title").text(player.posicion));
+        var pBirthday = $("<p>", { "text": player.fechaNacimiento });
+        var pCountry = $("<p>", { "text": player.pais });
+        ($(".card-text").append(pBirthday));
+        ($(".card-text").append(pCountry));
+        ($(".card-body img").attr("src", player.imagen));
+
+        $("#playersBtn").attr("href","players.html?idteam=" + player.idEquipo);
+      }
+    })
+  }
+
+  $(document).ready(function (data) {
     loadTeam();
   });
- </script>
-
-<style>
-  table {
-    margin: 10px;
-  }
-
-  table,
-  table th,
-  table td {
-    border: 1px solid black;
-  }
-
-  img {
-    width: 50%;
-    height: 50%;
-  }
-</style>
+</script>

@@ -1,60 +1,57 @@
-<nav
-    class="navbar navbar-expand-lg"
-    style="background-color: lightgray"
-  >
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/">
-        <img
-          src=./assets/images/uefa.png
-          alt="Uefa"
-          style="width: 50px; height: 50px"
-        />
-        Champions League
-      </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div
-        class="collapse navbar-collapse"
-        id="navbarSupportedContent"
-      >
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a
-              class="nav-link active text-warning"
-              aria-current="page"
-              href="index.html"
-            >
-              Home
-            </a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-danger" href="bets.html">
-              Bets
-            </a>
-          </li>
-          <li class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle text-white"
-              href="#"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Teams
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="dropdown-toggle">
-            </ul>
-          </li>
-        </ul>
-      </div>
+<nav class="navbar navbar-expand-lg" style="background-color: lightgray">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="index.html">
+      <img src=./assets/images/uefa.png alt="Uefa" style="width: 50px; height: 50px" />
+      Champions League
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <a class="nav-link active text-warning" aria-current="page" href="index.html">
+            Home
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-danger" href="bets.html">
+            Bets
+          </a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Teams
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="dropdown-toggle">
+          </ul>
+        </li>
+      </ul>
     </div>
-  </nav>
+  </div>
+</nav>
+
+<script>
+  function loadTeams() {
+    var request = "api/Equipos";
+    $.ajax({
+      "url": global.urlApi + request,
+      "method": "GET",
+      "dataType": "JSON",
+      success: function (data) {
+        $.each(data, function (index, team) {
+          var li = $("<li>");
+          var a = $("<a>", { "class": "dropdown-item", "href": "teams.html?idteam=" + team.idEquipo, "value": team.idEquipo, "text": team.nombre });
+          li.append(a);
+          var list = $(".dropdown-menu")
+          list.append(li);
+        });
+      }
+    })
+  }
+  $(document).ready(function (data) {
+    loadTeams();
+  });
+</script>

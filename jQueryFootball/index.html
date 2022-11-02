@@ -22,53 +22,17 @@
 
 <div id="menu"></div>
 
+<div class="row d-flex justify-content-center">
+  <img src="assets/images/Haaland.jpeg" style="width: 50%">
+</div>
+
 </body>
 
 </html>
 
 <script>
-  $.get('header.html',function(response){ 
-     $('#header').html(response); 
-  });
-
-  function loadTeams() {
-      var request = "api/equipos";
-      $.ajax({
-        "url": global.urlApi + request,
-        "method": "GET",
-        "dataType": "JSON",
-        success: function (data) {
-          $.each(data, function (index, team) {
-            var li = $("<li>");
-            var a = $("<a>", { "class": "dropdown-item", "data-toggle": "modal", "href": "team.html?idequipo=" + team.idEquipo, "value": team.idEquipo, "text": team.nombre });
-            console.log(a.text())
-            li.append(a);
-            var list = $(".dropdown-menu")
-            list.append(li);
-          });
-        }
-      })
-    }
-  // <a href="equipo.html?idequipo=1&idxd=2"></a>
   // $("#header").load("header.html");
-  $(document).ready(function(data) {
-    loadTeams();
+  $.get('header.html', function (response) {
+    $('#header').html(response);
   });
- </script>
-
-<style>
-  table {
-    margin: 10px;
-  }
-
-  table,
-  table th,
-  table td {
-    border: 1px solid black;
-  }
-
-  img {
-    width: 50%;
-    height: 50%;
-  }
-</style>
+</script>

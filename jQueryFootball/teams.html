@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Teams</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <link rel="stylesheet" href="js/jquery-ui-1.13.2/jquery-ui.min.css">
+  <link rel="stylesheet" href="js/bootstrap-5.2.2-dist/css/bootstrap.min.css">
+  <script src="js/jquery-3.6.1.min.js"></script>
+  <script src="js/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+  <!-- <script src="js/bootstrap-5.2.2-dist/js/bootstrap.min.js"></script> -->
+  <script src="js/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="global.js"></script>
+</head>
+
+<div id="header"></div>
+
+<div id="image"></div>
+
+<div>
+  <h3 class="mt-4 mb-4">Teams</h3>
+  <div class="row d-flex justify-content-center">
+    <div class="card text-center w-50">
+      <div class="card-header"></div>
+      <div class="card-body">
+        <img style="width: 150px; height: 200px;" />
+        <h5 class="card-title"></h5>
+        <p class="card-text"></p>
+        <a id="playersBtn">
+          <button class="btn btn-success">Players</button>
+        </a>
+        <a id="backBtn">
+          <button class="btn btn-primary">Go Back</button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+
+</html>
+
+<script>
+  $.get('header.html', function (response) {
+    $('#header').html(response);
+  });
+
+  // var status = 0;
+
+  var urlSearchParams = new URLSearchParams(window.location.search);
+  var params = Object.fromEntries(urlSearchParams.entries());
+
+  function loadTeam() {
+    var request = "api/Equipos/" + params.idteam;
+    $.ajax({
+      "url": global.urlApi + request,
+      "method": "GET",
+      "dataType": "JSON",
+      success: function (team) {
+        status = 1;
+        ($(".card-header").text(team.nombre));
+        ($(".card-title").text("Shempions: " + team.champions));
+        ($(".card-text").text(team.descripcion));
+        ($(".card-body img").attr("src", team.imagen));
+
+        $("#playersBtn").attr("href", "players.html?idteam=" + params.idteam + "&name=" + team.nombre);
+        $("#backBtn").attr("href", "index.html");
+      }
+    })
+  }
+
+
+
+
+  $(document).ready(function (data) {
+    loadTeam();
+    // if (status == 0) {
+    //   var image = $("<img>", { "src": "assets/images/loading.gif", "css": { "width": "100%", height: "800px" } });
+    //   $("#image").append(image);
+    // }
+  });
+</script>

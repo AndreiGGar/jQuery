@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Players</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css">
+  <link rel="stylesheet" href="js/jquery-ui-1.13.2/jquery-ui.min.css">
+  <link rel="stylesheet" href="js/bootstrap-5.2.2-dist/css/bootstrap.min.css">
+  <script src="js/jquery-3.6.1.min.js"></script>
+  <script src="js/jquery-ui-1.13.2/jquery-ui.min.js"></script>
+  <!-- <script src="js/bootstrap-5.2.2-dist/js/bootstrap.min.js"></script> -->
+  <script src="js/bootstrap-5.2.2-dist/js/bootstrap.bundle.min.js"></script>
+  <script src="global.js"></script>
+</head>
+
+<div id="header"></div>
+<h3 class="text-center mt-2" id="title"></h3>
+<div id="content"></div>
+
+<script src="../js/jquery-3.6.1.min.js"></script>
+<script>
+  var urlSearchParams = new URLSearchParams(window.location.search);
+  var params = Object.fromEntries(urlSearchParams.entries());
+
+  $(document).ready(function () {
+    $.get('header.html', function (response) {
+      $('#header').html(response);
+    });
+    switch (params.action) {
+      case "1":
+        createForm();
+        break;
+      case "2":
+        modifyForm();
+        break;
+      case "3":
+        deleteBet();
+        break;
+      default:
+        alert("Error. Action not found.")
+        break;
+    }
+  })
+
+  function throwBet() {
+    var user = $("#boxUser").val();
+    var result = $("#boxResult").val();
+    var date = $("#boxDate").val();
+
+    const bet = {
+      "idApuesta": (params.action == "1") ? 1 : parseInt(params.idbet),
+      "usuario": user,
+      "resultado": result,
+      "fecha": date
+    }
+
+    // var bet = new Object();
+    // bet.idApuesta = 1;
+    // bet.usuario = userName;
+    // bet.resultado = result;
+    // bet.fecha = date;
+
+    const dataJson = JSON.stringify(bet);
+
+    $.ajax({
+      'url': global.urlApi + "api/Apuestas",
+      'method': (params.action == "1") ? "POST" : "PUT",
+      'data': dataJson,
+      "contentType": "application/json",
+      success: function () {
+        window.location.href = "bets.html";
+      }
+    });
+  }
+
+  function createForm() {
+    $("#title").text('Create Bet');
+    var form = $("<form>", { 'class': "text-center", 'onSubmit': "throwBet(); return false;" });
+
+    var labelUser = $("<label>", { 'text': "User", "class": "form-label mt-2" });
+    var inputUser = $("<input>", { 'type': "text", "class": "form-control mx-auto w-50", "required": "", id: "boxUser" });
+    var labelResult = $("<label>", { 'text': "Result", "class": "form-label mt-2" });
+    var inputResult = $("<input>", { 'type': "text", "class": "form-control mx-auto w-50", "required": "", id: "boxResult" });
+    var labelDate = $("<label>", { 'text': "Date", "class": "form-label mt-2" });
+    var inputDate = $("<input>", { 'type': "text", "class": "form-control mx-auto w-50 mb-4", "required": "", id: "boxDate" });
+
+    var betBtn = $("<button>", { 'class': "btn btn-warning mx-2", 'text': "Bet" });
+    var backBtn = $("<a>", { 'class': "btn btn-primary mx-2", 'text': "Back", 'href': "bets.html" });
+
+    form.append(labelUser, inputUser, labelResult, inputResult, labelDate, inputDate, betBtn, backBtn);
+    $("#content").append(form);
+
+  }
+
+  function modifyForm() {
+    createForm();
+    $("#title").text('Edit Bet');
+    $.ajax({
+      'url': global.urlApi + "api/Apuestas/" + params.idbet,
+      'method': "GET",
+      "data": "JSON",
+      success: function (bet) {
+        $("#boxUser").val(bet.usuario);
+        $("#boxResult").val(bet.resultado);
+        $("#boxDate").val(bet.fecha);
+      }
+    });
+  }
+
+  function deleteBet() {
+    $("#title").text('Delete Bet');
+
+    // Sección de controles
+    var text = $("<p>", { 'text': "Are you sure of this action?", 'class': "h4 text-center text-bg-danger py-2" });
+
+    var btnDiv = $("<div>", { 'class': "text-center" });
+
+    var confirmBtn = $("<button>", { 'class': "btn btn-outline-danger my-2 mx-2", 'text': "Confirm", 'onClick': "confirmDelete()" });
+
+    var backBtn = $("<a>", { 'class': "btn btn-primary my-2 mx-2", 'text': "Back", 'href': "bets.html" });
+
+    $.ajax({
+      'url': global.urlApi + "api/Apuestas/" + params.idbet,
+      'method': "GET",
+      "data": "JSON",
+      success: function (data) {
+        var p = $("<p>", { 'text': "ID: " + params.idbet + ", User: " + data.usuario + ", Result: " + data.resultado + ", Date: " + data.fecha, 'class': "h6 text-center" });
+        btnDiv.append(confirmBtn, backBtn);
+        $("#content").append(text, p, btnDiv);
+      }
+    });
+  }
+
+  function confirmDelete() {
+    $.ajax({
+      "url": global.urlApi + "api/Apuestas/" + params.idbet,
+      "type": "DELETE",
+      success: function () {
+        window.location.href = "bets.html";
+      }
+    })
+  }
+
+</script>
+
+</body>
+
+</html>
